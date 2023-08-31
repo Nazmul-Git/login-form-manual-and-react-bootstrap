@@ -63,7 +63,7 @@ const Register = () => {
         sendEmailVerification(loggedUser)
         .then(result=>{
             console.log(result);
-            alert("Please, verified your email..!!")
+            alert("Please, verified your email..")
         })
     }
     return (
