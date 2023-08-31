@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
-import {createUserWithEmailAndPassword, getAuth} from 'firebase/auth'
+import {createUserWithEmailAndPassword, getAuth, sendEmailVerification} from 'firebase/auth'
 import app from '../../Firebase/firebase.config';
 import { Link } from 'react-router-dom';
 
@@ -44,16 +44,26 @@ const Register = () => {
         createUserWithEmailAndPassword(auth,email,pass)
         .then(result=>{
             const loggedUser=result.user;
-            console.log(loggedUser);
+            // console.log(loggedUser);
             setError('');
             event.target.reset();
             setSuccessful('Created successfully !!');
+
+            emailVerification(loggedUser);
+
 
         })
         .catch(error=>{
             console.error(error.message);
             setError(error.message);
             setSuccessful('');
+        })
+    }
+    const emailVerification=(loggedUser)=>{
+        sendEmailVerification(loggedUser)
+        .then(result=>{
+            console.log(result);
+            alert("Please, verified your email..!!")
         })
     }
     return (
