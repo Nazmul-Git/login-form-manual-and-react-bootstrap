@@ -20,6 +20,9 @@ const Login = () => {
         .then(result=>{
             const loggedUser=result.user;
             console.log(loggedUser);
+            if(loggedUser.emailVerified){
+                alert('Your email is not valid.!')
+            }
             setSuccessful('Login Successfully.');
             setError('');
         })
