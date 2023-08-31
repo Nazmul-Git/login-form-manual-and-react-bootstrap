@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import {createUserWithEmailAndPassword, getAuth} from 'firebase/auth'
 import app from '../../Firebase/firebase.config';
+import { Link } from 'react-router-dom';
 
 const auth= getAuth(app);
 
@@ -63,6 +64,7 @@ const Register = () => {
                 <input onBlur={passOnBlur} className='p-2' required    type="password" name="password" id="password" placeholder='Your password' />
                 <input className=' bg-blue-600 p-2 rounded-md text-2xl text-white' type="submit" value="Register" />
             </form>
+            <p><small>Already have an account ? Please <Link to="/login">Login</Link></small></p>
             <p className=' text-danger'> {error}</p>
             <p className=' text-success'> {successful}</p>
         </div>
