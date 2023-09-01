@@ -70,6 +70,7 @@ const Register = () => {
         <div className=' '>
             <h2>Register Here..</h2>
             <form onSubmit={registerSubmit} className='grid grid-cols-1 h-20 w-72 m-48 gap-6'>
+                <input onChange={emailOnChange} className='p-2' required   type="text" name="name" id="name" placeholder='Your name ' />
                 <input onChange={emailOnChange} className='p-2' required   type="email" name="email" id="email" placeholder='Your email ' />
                 <input onBlur={passOnBlur} className='p-2' required    type="password" name="password" id="password" placeholder='Your password' />
                 <input className=' bg-blue-600 p-2 rounded-md text-2xl text-white' type="submit" value="Register" />
