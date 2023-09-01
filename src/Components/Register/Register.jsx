@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
-import {createUserWithEmailAndPassword, getAuth, sendEmailVerification} from 'firebase/auth'
+import {createUserWithEmailAndPassword, getAuth, sendEmailVerification, updateProfile} from 'firebase/auth'
 import app from '../../Firebase/firebase.config';
 import { Link } from 'react-router-dom';
 
@@ -25,7 +25,8 @@ const Register = () => {
         setError('');
         const email=event.target.email.value;
         const pass=event.target.password.value;
-        // console.log(email, pass);
+        const name = event.target.name.value;
+        console.log(email, pass, name);
 
         //validation pass
         if(!/(?=.*[A-Z])/.test(pass)){
@@ -44,13 +45,13 @@ const Register = () => {
         createUserWithEmailAndPassword(auth,email,pass)
         .then(result=>{
             const loggedUser=result.user;
-            // console.log(loggedUser);
+            console.log(loggedUser);
             setError('');
             event.target.reset();
             setSuccessful('Created successfully !!');
 
             emailVerification(loggedUser);
-
+            updateUserProfile(loggedUser, name);
 
         })
         .catch(error=>{
@@ -66,11 +67,23 @@ const Register = () => {
             alert("Please, verified your email..")
         })
     }
+
+    const updateUserProfile=(user, name)=>{
+        updateProfile(user,{
+            displayName:name
+        })
+        .then(()=>{
+            console.log('Username updated.')
+        })
+        .catch(error=>{
+            console.log(error.message)
+        })
+    }
     return (
         <div className=' '>
             <h2>Register Here..</h2>
             <form onSubmit={registerSubmit} className='grid grid-cols-1 h-20 w-72 m-48 gap-6'>
-                <input onChange={emailOnChange} className='p-2' required   type="text" name="name" id="name" placeholder='Your name ' />
+                <input className='p-2' required   type="text" name="name" id="name" placeholder='Your name ' />
                 <input onChange={emailOnChange} className='p-2' required   type="email" name="email" id="email" placeholder='Your email ' />
                 <input onBlur={passOnBlur} className='p-2' required    type="password" name="password" id="password" placeholder='Your password' />
                 <input className=' bg-blue-600 p-2 rounded-md text-2xl text-white' type="submit" value="Register" />
